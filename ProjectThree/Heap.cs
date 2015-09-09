@@ -8,8 +8,10 @@ namespace ProjectThree
 {
     class Heap<T> where T :IComparable
     {
-        private List<T> theHeap; //= new List<T>();//all T were changed to Student
+        private List<T> theHeap; 
         private bool isMinHeap;
+        //private Student student;
+        //private int index;
         
         public Heap()
         {
@@ -18,7 +20,7 @@ namespace ProjectThree
 
         public Heap(bool isMinHeap)
         {
-
+            
         }
         //constructors
         public bool IsEmpty()
@@ -27,6 +29,7 @@ namespace ProjectThree
         }
         public void Insert(T item)//the problem is that it keeps looping through and the update to index doesnt work
         {
+
             if (theHeap.Count == 0)
             {
                 theHeap = new List<T>();
@@ -37,62 +40,72 @@ namespace ProjectThree
                 theHeap.Add(item);
                 PercolateUp(theHeap.Count - 1);
             }
+            
         }
-        public string GetRoot()
-        {
-            if (theHeap.Count == 0)
-            {
-                return null;
-            }
-            else
-            return theHeap[0].ToString();
-        }
-
-        public T RemoveRoot()
+        public T GetRoot()
         {
             if (theHeap.Count == 0)
             {
                 return default(T);
             }
-            if (theHeap.Count == 1)
+            else
             {
-                T root = theHeap.First(); //use percolate up and down as well as heapify to sort the inserted remember to copy
-                theHeap.RemoveAt(0);
-                return root;
+                T item = theHeap[0];
+                return item;
+            }
+        }
+
+        public void RemoveRoot()
+        {
+            if (theHeap.Count == 0)
+            {
+                return;
             }
             else
             {
-                T temp = theHeap[0];
-                theHeap[0] = theHeap[theHeap.Count - 1];
-                theHeap.RemoveAt(theHeap.Count - 1);
-                return temp;
+                theHeap[0] = theHeap[theHeap.Count - 1]; //swapping the first and last
+
+                if (theHeap.Count > 0)
+                {
+                    PercolateDown(0);
+                }
             }
 
         }
-        public string Print()
+        public void Print()
         {
-            string heapWrite = theHeap.ToString();
-            return heapWrite;
+            foreach (T i in theHeap)
+            {
+                Console.WriteLine(i);
+            }
         }
         public void HeapSort()
         {
-            int p = 0;
-            int l = (2 * p) + 1;
-            int r = (2 * p) + 1;
-
-            List<T> cList = new List<T>();
-            for (int i = 0; i < theHeap.Count; i++)
+            if (theHeap.Count == 0)
             {
-                cList[i] = theHeap[i];
+                return;
             }
-
-
-            while (theHeap[p].CompareTo(theHeap[l]) > 0 || theHeap[p].CompareTo(theHeap[r]) > 0)
+            else
             {
-                PercolateDown();
+                List<T> nList = new List<T>(theHeap);
+                int p = (nList.Count - 1) / 2;
+
+                for (int i = p; p >= 0; p--)
+                    Heapify(nList, nList.Count, i);
+                for (int j = nList.Count - 1; j > 0; j--) // swap
+                {
+                    T temp = nList[j];
+                    nList[j] = nList[0];
+                    nList[0] = temp;
+
+                    Heapify(nList, nList.Count, 0);
+                }
+                for (int i = 0; i < nList.Count; i++)
+                {
+                    Console.WriteLine(nList[i]);
+                }
             }
         }
-
         private void PercolateUp(int pos) //int pos to implement recursively
         {
             int parent;
@@ -101,7 +114,7 @@ namespace ProjectThree
             if (pos != 0 && pos % 2 != 0)
             {
                 parent = (pos - 1) / 2;
-                if (theHeap[parent].CompareTo(theHeap[pos]) < 0)
+                if(theHeap[parent].CompareTo(theHeap[pos]) < 0)
                 {
                     temp = theHeap[parent];
                     theHeap[parent] = theHeap[pos];
@@ -122,35 +135,76 @@ namespace ProjectThree
             }
 
         }
-        private void PercolateDown() //int pos to implement recursively
+        private void PercolateDown(int pos) //int pos to implement recursively
         {
-            //child = 2 * child + 1 || 2
-            int pos = 0;
-            int childL = (2 * pos) + 1;
-            int childR = (2 * pos) + 2;
+            int minDex;
+            int lChildDex;
+            int rChildDex;
+            T temp;
 
-            while (theHeap[childL].CompareTo(theHeap[theHeap.Count]) < 0)//might need a compareTo depending on outcome
+            lChildDex = 2 * pos + 1;
+            rChildDex = 2 * pos + 2;
+
+            if (rChildDex >= theHeap.Count) 
             {
-                int min = 1;
-                if (childR < theHeap.Count)//if a right child exists
+                if (lChildDex >= theHeap.Count) 
                 {
-                    min++;
-                    if (theHeap[pos].CompareTo(theHeap[min]) < 0) //if the position number is smaller
-                    {
-                        //swapping lower items
-                        T temp = theHeap[pos];
-                        theHeap[pos] = theHeap[min];
-                        int place = theHeap.IndexOf(temp);
-                        theHeap[min] = theHeap[place];
-                        pos = min;
-                        childL = (2 * pos + 1);
-
-                    }
-                    else return;
+                    return;
+                }
+                else 
+                {
+                    minDex = lChildDex;
                 }
             }
+            else 
+            {
+                if (theHeap[lChildDex].CompareTo(theHeap[rChildDex]) <= 0)
+                {
+                    minDex = lChildDex;
+                }
+                else
+                {
+                    minDex = rChildDex;
+                }
+            }
+            if (theHeap[pos].CompareTo(theHeap[minDex]) > 0)
+            {
+                temp = theHeap[minDex];
+                theHeap[minDex] = theHeap[pos];
+                theHeap[pos] = temp;
+                PercolateDown(minDex);
+            }
+            }
 
+        private void Heapify(List<T> list, int count, int pos) 
+        {
+            int left = 2 * pos + 1;
+            int right = 2 * pos + 2;
+            int min = 0;
+
+            if (left < list.Count && list[left].CompareTo(list[pos]) < 0)
+            {
+                min = left;
+            }
+            else
+            {
+                min = pos;
+            }
+
+            if (right < list.Count && list[right].CompareTo(list[min]) < 0)
+            {
+                min = right;
+            }
+            if (min != pos)
+            {
+                T temp = list[pos];
+                list[pos] = list[min];
+                list[min] = temp;
+
+                Heapify(list, list.Count, min);
+            }
+        }
         }
     }
 
-}
+

@@ -14,20 +14,31 @@ namespace ProjectThree
         public int ID { get { return id; } }
 
         public double GPA { get { return gpa; } }
+        public Student()
+        {
+            this.id = ID;
+            this.gpa = GPA;
+        }
 
         public Student(int id, double gpa)
         {
             this.id = id;
             this.gpa = gpa;
         }
-        public void Print() 
+        public void Print()
         {
             Console.WriteLine("{0}, {1}", id, GPA);
         }
 
         public int CompareTo(object obj)
         {
-            throw new NotImplementedException();
+            Student p = obj as Student;
+            if (this.GPA > p.GPA)
+                return 1;
+            else if (this.GPA == p.GPA)
+                return 0;
+            else
+                return -1;
         }
     }
 }
