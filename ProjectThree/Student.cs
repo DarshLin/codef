@@ -25,10 +25,6 @@ namespace ProjectThree
             this.id = id;
             this.gpa = gpa;
         }
-        public void Print()
-        {
-            Console.WriteLine("{0}, {1}", id, GPA);
-        }
 
         public int CompareTo(object obj)
         {
@@ -39,6 +35,10 @@ namespace ProjectThree
                 return 0;
             else
                 return -1;
+        }
+        public override string ToString()
+        {
+            return String.Format("ID: {0}, GPA: {1}", this.ID, this.GPA);
         }
     }
 }

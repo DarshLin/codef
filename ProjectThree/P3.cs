@@ -25,14 +25,27 @@ namespace ProjectThree
                 string[] delimiter = { ",", " " };
                 string[] info = sr.Split(delimiter, StringSplitOptions.RemoveEmptyEntries);
                 student = new Student(Convert.ToInt32(info[0]), Convert.ToDouble(info[1]));
-                double gpa = student.GPA; 
-                theHeap.Insert(student);
+                
+                theHeap.Insert(student);//insert all data into the Heap
                 sr = reader.ReadLine();
             }
-            //theHeap.HeapSort();
-            theHeap.Print();
+            Console.WriteLine("Empty? {0}",theHeap.IsEmpty()); //false
+            Console.WriteLine("Root: {0}",theHeap.GetRoot());
 
-                Console.ReadKey();
+            theHeap.RemoveRoot();
+            theHeap.Print(); //Prints out student id and gpa as min heap
+
+            
+            Console.WriteLine();
+            Console.WriteLine("HEAPSORT!!");
+            theHeap.HeapSort();//prints out the heap sort going from high to low
+            
+            
+            
+            
+            
+            
+            Console.ReadKey();
         }
     }
 }
