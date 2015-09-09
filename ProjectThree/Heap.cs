@@ -74,9 +74,9 @@ namespace ProjectThree
         }
         public void Print()
         {
-            foreach (T i in theHeap)
+            for (int i = 0; i < theHeap.Count;i++ )
             {
-                Console.WriteLine(i);
+                Console.WriteLine(theHeap[i]);
             }
         }
         public void HeapSort()
@@ -110,21 +110,9 @@ namespace ProjectThree
         {
             int parent;
             T temp;
-
-            if (pos != 0 && pos % 2 != 0)
+            if (pos > 0)
             {
-                parent = (pos - 1) / 2;
-                if(theHeap[parent].CompareTo(theHeap[pos]) < 0)
-                {
-                    temp = theHeap[parent];
-                    theHeap[parent] = theHeap[pos];
-                    theHeap[pos] = temp;
-                    PercolateUp(parent);
-                }
-            }
-            else if (pos != 0 && pos % 2 == 0)
-            {
-                parent = (pos - 2) / 2;
+                parent = pos / 2;
                 if (theHeap[parent].CompareTo(theHeap[pos]) < 0)
                 {
                     temp = theHeap[parent];
@@ -133,6 +121,7 @@ namespace ProjectThree
                     PercolateUp(parent);
                 }
             }
+            
 
         }
         private void PercolateDown(int pos) //int pos to implement recursively

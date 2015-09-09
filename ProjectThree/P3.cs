@@ -29,9 +29,8 @@ namespace ProjectThree
                 theHeap.Insert(student);
                 sr = reader.ReadLine();
             }
-            theHeap.HeapSort();
+            //theHeap.HeapSort();
             theHeap.Print();
-
 
                 Console.ReadKey();
         }
