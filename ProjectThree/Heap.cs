@@ -11,6 +11,7 @@ namespace ProjectThree
         private List<T> theHeap; 
         private bool isMinHeap;
         
+        //constructors
         public Heap()
         {
             theHeap = new List<T>();
@@ -21,27 +22,23 @@ namespace ProjectThree
             int root = 0;
             int left = 2 * root + 1;
             int right = 2 * root + 2;
-            if (theHeap.Count == 0)
+            for(root = 0; root < theHeap.Count -1; root++)
+            if (theHeap[root].CompareTo(theHeap[left]) < 0 && theHeap[root].CompareTo(theHeap[right]) < 0) 
+            {
+                isMinHeap = true;
+                PercolateUp(theHeap.Count - 1);
+            }
+            else
             {
                 isMinHeap = false;
-            }
-            for (int i = 0; i < theHeap.Count; i++)
-            {
-                root = i;
-                if (theHeap[root].CompareTo(theHeap[left]) < 0 && theHeap[root].CompareTo(theHeap[right]) < 0)
-                {
-                    isMinHeap = true;
-                }
-                else
-                    isMinHeap = false;
+                PercolateDown(0);
             }
         }
-        //constructors
         public bool IsEmpty()
         {
             return theHeap.Count == 0;
         }
-        public void Insert(T item)//the problem is that it keeps looping through and the update to index doesnt work
+        public void Insert(T item)
         {
 
             if (theHeap.Count == 0)
@@ -94,14 +91,6 @@ namespace ProjectThree
                 Console.WriteLine(theHeap[i]);
             }
         }
-        //public void copytest()
-        //{
-        //    List<T> nList = new List<T>(theHeap);
-        //    for (int i = 0; i < nList.Count; i++)
-        //    {
-        //        Console.WriteLine(nList[i]);
-        //    }
-        //}
         public void HeapSort()
         {
                 List<T> nList = new List<T>(theHeap);
@@ -187,7 +176,7 @@ namespace ProjectThree
             }
             }
 
-        private void Heapify(List<T> list,int count, int pos) 
+        private void Heapify(List<T> list,int count, int pos) //Helper for Heapsort
         {
             int l = (pos + 1) * 2 - 1;
             int r = (pos + 1) * 2;
