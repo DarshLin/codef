@@ -43,9 +43,13 @@ namespace LabFourteen
             }
 
             while (r < en - mi)
+            {
                 mList[i++] = list[mi + r++];
+            }
             while (l < mi - st)
+            {
                 mList[i++] = list[st + l++];
+            }
             Array.Copy(mList, 0, list, st, mList.Length);
 
         }
@@ -68,56 +72,10 @@ namespace LabFourteen
             }
             return list;
         }
-
-        private void Heapify(List<T> list, int count, int pos) //Helper for Heapsort
-        {
-            int l = (pos + 1) * 2 - 1;
-            int r = (pos + 1) * 2;
-            int min = 0;
-
-            if (l < count && list[l].CompareTo(list[pos]) > 0)
-            {
-                min = l;
-            }
-            else
-                min = pos;
-
-            if (r < count && list[r].CompareTo(list[min]) > 0)
-                min = r;
-            if (min != pos)
-            {
-                T temp = list[pos];
-                list[pos] = list[min];
-                list[min] = temp;
-
-                Heapify(list, count, min);
-            }
-        }
-        public void HeapSort(List<T> list)
+        
+        public void HeapSort()
         {
 
-            List<T> nList = new List<T>(list);
-
-            int size = nList.Count;
-            for (int p = (size - 1) / 2; p >= 0; p--)
-            {
-                Heapify(nList, size, p);
-
-            }
-            for (int i = nList.Count - 1; i > 0; i--)
-            {
-                T temp = nList[i];
-                nList[i] = nList[0];
-                nList[0] = temp;
-
-                size--;
-                Heapify(nList, size, 0);
-            }
-
-            for (int i = 0; i < nList.Count; i++)
-            {
-                Console.WriteLine(nList[i]);
-            }
         }
         public void QuickSort()
         {

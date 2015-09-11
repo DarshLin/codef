@@ -33,7 +33,7 @@ namespace LabFourteen
             list.Add(12);
             list.Add(36);
 
-            sorter.HeapSort(list);
+            sorter.MergeSort(list);
             //sorter.Print(list);
 
                 Console.ReadKey();
