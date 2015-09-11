@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,50 +26,76 @@ namespace LabFourteen
                 }
             }
         }
-        private void Merge(T[] list, int st, int mi, int en) //could probbly make comparer somewhere else
+        private List<T> Merge(List<T> Left, List<T> Right, List<T> list)
         {
-            T[] mList = new T[en- st];
+            int l = Left.Count;
+            int r = Right.Count;
 
-            int l = 0; //Left indexer
-            int r = 0; //Right indexer
-            int i = 0; //list indexer
-            //T data;
-            
-            while (l < mi - st && r < (en - mi))
-            {
-                mList[i++] = list[st + 1].CompareTo(list[mi + r]) < 0 
-                    ? list[st + l++] : list[mi + r++];
-            }
+            int x = 0; //Left indexer
+            int y = 0; //Right indexer
+            int z = 0; //list indexer
 
-            while (r < en - mi)
+            while (x < l && y < r)
             {
-                mList[i++] = list[mi + r++];
-            }
-            while (l < mi - st)
-            {
-                mList[i++] = list[st + l++];
-            }
-            Array.Copy(mList, 0, list, st, mList.Length);
-
-        }
-        public T[] MergeSort(List<T> line)
-        {
-            T[] list = new T[line.Count];
-            for (int i = 0; i < line.Count; i++)
-            {
-                list[i] = line[i];
-            }
-
-            int length = list.Length;
-            int mid = length / 2;
-            for (int i = 0; i < mid + 1; i = i * 2)
-            {
-                for (int j = i; j < length; j = j + 2 * i)
+                if (Left[x].CompareTo(Right[y]) < 0)
                 {
-                    Merge(list, j - i, j, Math.Min(j + i, length));
+                    list[z] = Left[x];
+                    x = x + 1;
+
+                }
+                else
+                {
+                    list[z] = Right[y];
+                    y = y + 1;
+
+                }
+                z = z + 1;
+                while (x < l) //get the rest on left
+                {
+                    list[z] = Left[x];
+                    z = z +1;
+                    x = x + 1;
+                }
+                while(y < r) //get rest on right
+                {
+                    list[z] = Right[y];
+                    z = z + 1;
+                    y = y + 1;
                 }
             }
             return list;
+        }
+        public List<T> MergeSort(List<T> line)
+        {
+            List<T> list = new List<T>(line);
+
+            //T data;
+            int length = list.Count;
+            
+            if (length < 2)
+            {
+                return list;
+            }
+
+            int mid = length / 2;
+            List<T> Left = new List<T>(mid);
+            List<T> Right = new List<T>(length - mid);
+
+            for (int i = 0; i < mid; i++)
+            {
+                Left.Add(list[i]);
+                Console.WriteLine("Left: {0}", Left[i]);
+            }
+            for (int i = mid; i < length; i++)
+            {
+                Right.Add(list[i]);
+                Console.WriteLine("Right: {0}", Right[i]);
+            }
+            List<T> msLeft = MergeSort(Left);
+            List<T> msRight = MergeSort(Right);
+            
+            return Merge(msLeft, msRight, list);
+
         }
         
         public void HeapSort()
