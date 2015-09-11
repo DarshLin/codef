@@ -26,8 +26,9 @@ namespace LabFourteen
                 }
             }
         }
-        private List<T> Merge(List<T> Left, List<T> Right, List<T> list)
+        private List<T> Merge(List<T> Left, List<T> Right)
         {
+            List<T> list = new List<T>();
             int l = Left.Count;
             int r = Right.Count;
 
@@ -39,26 +40,27 @@ namespace LabFourteen
             {
                 if (Left[x].CompareTo(Right[y]) < 0)
                 {
-                    list[z] = Left[x];
+                    list.Add(Left[x]);
+                    Left.RemoveAt(x);
                     x = x + 1;
-
                 }
                 else
                 {
-                    list[z] = Right[y];
+                    list.Add(Right[y]);
+                    Right.RemoveAt(y);
                     y = y + 1;
 
                 }
                 z = z + 1;
                 while (x < l) //get the rest on left
                 {
-                    list[z] = Left[x];
-                    z = z +1;
+                    list.Add(Left[x]);
+                    z = z + 1;
                     x = x + 1;
                 }
-                while(y < r) //get rest on right
+                while (y < r) //get rest on right
                 {
-                    list[z] = Right[y];
+                    list.Add(Right[y]);
                     z = z + 1;
                     y = y + 1;
                 }
@@ -84,6 +86,7 @@ namespace LabFourteen
             for (int i = 0; i < mid; i++)
             {
                 Left.Add(list[i]);
+                Console.WriteLine(Left[i]);
             }
             for (int i = mid; i < length; i++)
             {
@@ -92,8 +95,7 @@ namespace LabFourteen
             }
             List<T> msLeft = MergeSort(Left);
             List<T> msRight = MergeSort(Right);
-            
-            return Merge(msLeft, msRight, list);
+            return Merge(msLeft, msRight);
 
         }
         
