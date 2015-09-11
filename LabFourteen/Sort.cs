@@ -36,33 +36,34 @@ namespace LabFourteen
             int y = 0; //Right indexer
             int z = 0; //list indexer
 
-            while (x < l && y < r)
+            if (list.Count > 0)
             {
-                if (Left[x].CompareTo(Right[y]) < 0)
+                while (x < l && y < r)
                 {
-                    list.Add(Left[x]);
-                    Left.RemoveAt(x);
-                    x = x + 1;
-                }
-                else
-                {
-                    list.Add(Right[y]);
-                    Right.RemoveAt(y);
-                    y = y + 1;
+                    if (Left[0].CompareTo(Right[0]) < 0)
+                    {
+                        list.Add(Left[0]);
+                        Left.RemoveAt(0);
+                    }
+                    else
+                    {
+                        list.Add(Right[0]);
+                        Right.RemoveAt(0);
 
-                }
-                z = z + 1;
-                while (x < l) //get the rest on left
-                {
-                    list.Add(Left[x]);
-                    z = z + 1;
-                    x = x + 1;
-                }
-                while (y < r) //get rest on right
-                {
-                    list.Add(Right[y]);
-                    z = z + 1;
-                    y = y + 1;
+
+                    }
+                    while (x < l) //get the rest on left
+                    {
+                        list.Add(Left[x]);
+                        z = z + 1;
+                        x = x + 1;
+                    }
+                    while (y < r) //get rest on right
+                    {
+                        list.Add(Right[y]);
+                        z = z + 1;
+                        y = y + 1;
+                    }
                 }
             }
             return list;
