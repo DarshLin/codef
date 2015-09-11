@@ -9,9 +9,9 @@ namespace LabFourteen
     class Sort<T> where T : IComparable
     {
         //List<T> list = new List<T>();
-        public void InsertionSort(List<T> line)
+        public void InsertionSort(List<T> list)
         {
-            List<T> list = new List<T>(line);
+            //list = new List<T>();
             T data;
             int j;
             for (int i = 1; i < list.Count; i++)
@@ -25,67 +25,79 @@ namespace LabFourteen
                     list[j] = data;
                 }
             }
-
-            for(int i = 0; i < list.Count; i++) 
-            {
-                Console.WriteLine(list[i]);
-            }
         }
         private void Merge(List<T> Left, List<T> Right, List<T> list)
         {
             int l = Left.Count;
             int r = Right.Count;
 
-            int x = 0;
-            int y = 0;
-            int z = 0;
+            int x = 0; //Left indexer
+            int y = 0; //Right indexer
+            int z = 0; //list indexer
 
             while (x < l && y < r)
             {
                 if (Left[x].CompareTo(Right[y]) < 0)
                 {
                     list[z] = Left[x];
-                    z++;
-                    x++;
+                    x = x + 1;
+
                 }
                 else
                 {
                     list[z] = Right[y];
-                    z++;
-                    y++;
+                    y = y + 1;
+
+                }
+                z = z + 1;
+                while (x < l) //get the rest on left
+                {
+                    list[z] = Left[x];
+                    z = z +1;
+                    x = x + 1;
+                }
+                while(y < r) //get rest on right
+                {
+                    list[z] = Right[y];
+                    z = z + 1;
+                    y = y + 1;
                 }
             }
-
         }
-        public void MergeSort(List<T> line)
+        public void MergeSort(List<T> list)
         {
-            List<T> list = new List<T>(line);
+            T[] nList = new T[list.Count];
 
-            T data;
-            int length = list.Count;
+            for (int i = 0; i < list.Count; i++)
+            {
+                nList[i] = list[i];
+            //Console.WriteLine(nList[i]);
+            }
+
+            int length = nList.Length;
             if (length < 2)
             {
                 return;
             }
 
+
             int mid = length / 2;
-            List<T> Left = new List<T>(mid);
-            List<T> Right = new List<T>(length - mid);
+            T[] left = new T[mid];
+            T[] right = new T[length - mid];
 
             for (int i = 0; i < mid; i++)
             {
-                Left.Add(list[i]);
-               
+                left[i] = nList[i];
             }
             for (int i = mid; i < length; i++)
             {
-                data = list[i];
-                Right.Add(data);
+                right[i] = nList[i];
             }
 
-            MergeSort(Left);
-            MergeSort(Right);
-            Merge(Left, Right, list);
+            //MergeSort(Left);
+            //MergeSort(Right);
+            //Merge(Left, Right, list);
+            
         }
         
         public void HeapSort()
@@ -99,6 +111,13 @@ namespace LabFourteen
         public void ListSort()
         {
 
+        }
+        public void Print(List<T> list)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                Console.WriteLine(list[i]);
+            }
         }
     }
 }
