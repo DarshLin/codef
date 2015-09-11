@@ -83,13 +83,13 @@ namespace LabFourteen
 
             for (int i = 0; i < mid; i++)
             {
-                Left.Insert(i, list[i]);
-                Console.WriteLine(list[i]);
+                Left.Add(list[i]);
+                Console.WriteLine("Left: {0}", Left[i]);
             }
             for (int i = mid; i < length; i++)
             {
-                //Right.Insert(i, list[i]);
-                //Console.WriteLine(list[i]);
+                Right.Add(list[i]);
+                Console.WriteLine("Right: {0}", Right[i]);
             }
             List<T> msLeft = MergeSort(Left);
             List<T> msRight = MergeSort(Right);
