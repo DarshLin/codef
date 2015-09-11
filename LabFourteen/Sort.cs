@@ -26,7 +26,7 @@ namespace LabFourteen
                 }
             }
         }
-        private void Merge(List<T> Left, List<T> Right, List<T> list)
+        private List<T> Merge(List<T> Left, List<T> Right, List<T> list)
         {
             int l = Left.Count;
             int r = Right.Count;
@@ -63,41 +63,38 @@ namespace LabFourteen
                     y = y + 1;
                 }
             }
+            return list;
         }
-        public void MergeSort(List<T> list)
+        public List<T> MergeSort(List<T> line)
         {
-            T[] nList = new T[list.Count];
+            List<T> list = new List<T>(line);
 
-            for (int i = 0; i < list.Count; i++)
-            {
-                nList[i] = list[i];
-            //Console.WriteLine(nList[i]);
-            }
-
-            int length = nList.Length;
+            //T data;
+            int length = list.Count;
+            
             if (length < 2)
             {
-                return;
+                return list;
             }
 
-
             int mid = length / 2;
-            T[] left = new T[mid];
-            T[] right = new T[length - mid];
+            List<T> Left = new List<T>(mid);
+            List<T> Right = new List<T>(length - mid);
 
             for (int i = 0; i < mid; i++)
             {
-                left[i] = nList[i];
+                Left.Add(list[i]);
+
             }
             for (int i = mid; i < length; i++)
             {
-                right[i] = nList[i];
+                Right.Add(list[i]);
             }
 
-            //MergeSort(Left);
-            //MergeSort(Right);
-            //Merge(Left, Right, list);
+            List<T> msLeft = MergeSort(Left);
+            List<T> msRight = MergeSort(Right);
             
+            return Merge(msLeft, msRight, list);
         }
         
         public void HeapSort()

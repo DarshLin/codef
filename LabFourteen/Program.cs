@@ -31,6 +31,7 @@ namespace LabFourteen
             list.Add(478);
             list.Add(58);
             list.Add(12);
+            list.Add(36);
 
             sorter.MergeSort(list);
             //sorter.Print(list);
