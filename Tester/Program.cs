@@ -16,7 +16,7 @@ namespace Tester
 
             //}
 
-            public void MergeSort(List<T> list)
+            public void MergeSort(List<int> list)
             {
                 int length = list.Count;
                 if (length < 2)
@@ -24,8 +24,8 @@ namespace Tester
                     return;
                 }
                 int mid = length / 2;
-                List<T> left = new List<T>();
-                List<T> right = new List<T>();
+                List<int> left = new List<int>();
+                List<int> right = new List<int>();
 
                 for (int i = 0; i < mid; i++)
                 {
@@ -40,18 +40,18 @@ namespace Tester
                 Merge(left, right);
 
             }
-            public void Merge(List<T> left, List<T> right)
+            public void Merge(List<int> left, List<int> right)
             {
-                List<T> list = new List<T>();
+                List<int> list = new List<int>();
 
                 int lc = left.Count;
                 int rc = right.Count;
                 int l = 0;
                 int r = 0;
 
-                while (l < lc && r < rc)
+                while (l < left.Count && r < right.Count)
                 {
-                    if (left[l].CompareTo(right[r]) <= 0)
+                    if (left[l] <= right[r])
                     {
                         list.Add(left[l]);
                         l = l + 1;
@@ -62,19 +62,17 @@ namespace Tester
                         r = r + 1;
                     }
                 if (l < lc)
-                {
                     list.Add(left[l]);
-                    l++;
-                }
-                if (r < rc)
-                {
+                else if (r < rc)
                     list.Add(right[r]);
-                    r++;
+                
+                for (int i = 0; i < list.Count; i++)
+                {
+                    Console.WriteLine(list[i]);
                 }
                 }
-                Print(list);
             }
-            public void Print(List<T> list)
+            public void Print(List<int> list)
             {
                 for (int i = 0; i < list.Count; i++)
                 {
